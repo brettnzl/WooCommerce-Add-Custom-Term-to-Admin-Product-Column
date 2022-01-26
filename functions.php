@@ -7,7 +7,7 @@ function misha_populate_brands( $column_name ) {
 		if ($x) {
 			$i = 1;
 			foreach ($x as $brand) {
-				echo '<a href="https://www.chefscomplements.co.nz/wp-admin/edit.php?brands='.$brand->slug.'&post_type=product">'.$brand->name.'</a>'; 
+				echo '<a href="/wp-admin/edit.php?brands='.$brand->slug.'&post_type=product">'.$brand->name.'</a>'; 
 				if ( $i < sizeof($x) ){ 
 					echo ', ';
 				};
