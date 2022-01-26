@@ -1,3 +1,17 @@
+<?php 
+
+add_filter( 'manage_edit-product_columns', 'misha_brand_column', 20 );
+function misha_brand_column( $columns_array ) {
+
+	// I want to display Brand column just after the product name column
+	return array_slice( $columns_array, 0, 3, true )
+	+ array( 'brand' => 'Brand' )
+	+ array_slice( $columns_array, 3, NULL, true );
+
+
+}
+
+
 add_action( 'manage_posts_custom_column', 'misha_populate_brands' );
 function misha_populate_brands( $column_name ) {
 
