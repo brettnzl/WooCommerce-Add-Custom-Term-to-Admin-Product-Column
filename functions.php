@@ -1,5 +1,38 @@
 <?php 
 
+
+// Brands Taxonomy Filter - ADMIN AREA
+add_filter( 'woocommerce_product_filters', 'admin_filter_products_by_din' );
+function admin_filter_products_by_din( $output ) {
+    global $wp_query;
+
+    $taxonomy      = 'brands';
+    $selected      = isset( $wp_query->query_vars[$taxonomy] ) ? $wp_query->query_vars[$taxonomy] : '';
+    $info_taxonomy = get_taxonomy($taxonomy);
+
+    $custom_dropdown = wp_dropdown_categories(array(
+        'show_option_none' => __("Select a {$info_taxonomy->label}"), // changed
+        'taxonomy'         => $taxonomy,
+        'name'             => $taxonomy,
+        'order'            => 'ASC',
+        'echo'             => false, // <== Needed in a filter hook
+        'tab_index'        => '2',
+        'selected'         => $selected,
+        'show_count'       => true,
+        'hide_empty'       => false,
+        'value_field'      => 'slug',
+		'option_none_value'=> ''
+    ));
+
+    $after = '<select name="product_type"'; // The start of the html output of product type filter dropdown.
+
+    $output = str_replace( $after, $custom_dropdown . $after, $output );
+
+    return $output;
+}
+
+
+
 add_filter( 'manage_edit-product_columns', 'misha_brand_column', 20 );
 function misha_brand_column( $columns_array ) {
 
